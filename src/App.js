@@ -1,25 +1,33 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import 'file-drop-element';
 
 class App extends Component {
+  constructor (props) {
+    super(props);
+    this.myRef = React.createRef();
+
+
+  }
+
+  componentDidMount () {
+    if (this.myRef && this.myRef.current) {
+      this.myRef.current.addEventListener('filedrop', (event) => console.log('drop', event.file));
+    } 
+    
+  }
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div className="App">        
+        <file-drop 
+          id="dropTarget" 
+          class="drop"
+          onfiledrop={(event) => {console.log('drop', event.file)}}
+          ref={this.myRef}
+        >
+          Drop a file here
+        </file-drop>
       </div>
     );
   }
